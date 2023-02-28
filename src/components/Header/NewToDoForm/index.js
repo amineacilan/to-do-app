@@ -1,15 +1,20 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import validations from "./Validations";
+import { useTodo } from "../../../contexts/ToDoContext";
+
 function NewToDoForm() {
+  const { addTodo } = useTodo();
   return (
     <Formik
       initialValues={{
         text: "",
       }}
-      onSubmit={async (values) => {
-        await new Promise((r) => setTimeout(r, 500));
-        alert(JSON.stringify(values, null, 2));
+      onSubmit={(values, bag) => {
+        console.log(values);
+
+        addTodo(values.text);
+        bag.resetForm();
       }}
       validationSchema={validations}
     >
