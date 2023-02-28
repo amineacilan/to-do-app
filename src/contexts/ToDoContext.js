@@ -15,7 +15,7 @@ export const ToDoProvider = ({ children }) => {
     },
   ]);
 
-  const toggleTodo=(id) => {
+  const toggleTodo = (id) => {
     const cloned_todos = [...todos];
     const itemIndex = cloned_todos.findIndex((todo) => todo.id === id);
     /* console.log(itemIndex); */
@@ -24,16 +24,23 @@ export const ToDoProvider = ({ children }) => {
     item.completed = !item.completed;
     console.log("cloned", cloned_todos);
     setTodos(cloned_todos);
+  };
+  const destroyTodo = (id) => {
+    const cloned_todos = [...todos];
 
-  }
-  
+    const itemIndex = cloned_todos.findIndex((todo) => todo.id === id);
+
+    cloned_todos.splice(itemIndex, 1);
+    /* console.log("item", itemIndex); */
+    setTodos(cloned_todos);
+  };
 
   const addTodo = (text) =>
     setTodos((prev) => [
       ...prev,
       { id: uuidv4(), text: text, completed: false },
     ]);
-  const values = { todos, setTodos, addTodo,toggleTodo };
+  const values = { todos, setTodos, addTodo, toggleTodo, destroyTodo };
   return <ToDoContext.Provider value={values}>{children}</ToDoContext.Provider>;
 };
 
